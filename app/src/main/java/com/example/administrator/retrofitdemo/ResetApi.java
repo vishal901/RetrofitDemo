@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -13,6 +14,6 @@ public interface ResetApi {
 
 
 
-    @POST("grocery")
-    Call<abc> getTasks();
+    @GET("grocery")
+    Call<OffresData> getTasks();
 }
