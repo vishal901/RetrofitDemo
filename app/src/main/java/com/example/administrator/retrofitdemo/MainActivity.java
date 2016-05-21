@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String BASE_URL = "http://nearely.com/nearely/index.php/api/";
     private RecyclerView mRecyclerView;
     private SpeckMainAdapter adpater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,42 +31,72 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //// TODO: 5/19/2016  connnection time out mate OkHttp
+
+//
+//        OkHttpClient okHttpClient1 = new OkHttpClient().
+//                newBuilder()
+//                .connectTimeout(60, TimeUnit.SECONDS)
+//                .writeTimeout(60, TimeUnit.SECONDS)
+//                .readTimeout(60, TimeUnit.SECONDS)
+//                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(okHttpClient1)
                 .build();
 
         ResetApi resetApi = retrofit.create(ResetApi.class);
 //        ProfileService profileService = mRestAdapter.create(ProfileService.class);
 
-        Call<OffresData> call = resetApi.getTasks();
+//        Call<ResponseBody> call = resetApi.getTasks();
+//
+//        call.enqueue(new );
 
-        call.enqueue(new Callback<OffresData>() {
 
 
-            @Override
-            public void onResponse(Call<OffresData> call, Response<OffresData> response) {
+//        call.onResponse(new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//
+//                int code = response.code();
+//                Log.e("fhgdfy", "" + code);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, Throwable t) {
+//                Log.e("failure", "" + t.getMessage());
+//            }
+//        });
 
-               int code = response.code();
 
-                Log.e("fhgdfy",""+code);
-
-                OffresData myResp =response.body();
-                myResp.getOffers();
-
-                adpater = new SpeckMainAdapter(MainActivity.this,  myResp.getOffers());
-
-                mRecyclerView.setAdapter(adpater);
-
-            }
-
-            @Override
-            public void onFailure(Call<OffresData> call, Throwable t) {
-
-                Log.e("failure",""+t.getMessage());
-            }
-        });
+//        call.enqueue(new Callback<OffresData>() {
+//
+//
+//            @Override
+//            public void onResponse(Call<OffresData> call, Response<OffresData> response) {
+//
+//                int code = response.code();
+//
+//                Log.e("fhgdfy", "" + code);
+//
+//                OffresData myResp = response.body();
+//                myResp.getOffers();
+//
+//                adpater = new SpeckMainAdapter(MainActivity.this, myResp.getOffers());
+//
+//                mRecyclerView.setAdapter(adpater);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<OffresData> call, Throwable t) {
+//
+//                Log.e("failure", "" + t.getMessage());
+//            }
+//        });
 //        call.enqueue(new Callback<List<OffresData>>() {
 //            @Override
 //            public void onResponse(Call<List<OffresData>> call, Response<List<OffresData>> response) {
